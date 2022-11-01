@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.1 <0.9.0;
 
+//https://medium.com/laykadao/solidity-veri-tipi-string-8585a2b1a183
+
 contract ReverseString {
     function reverseString ( string calldata _str) external pure  returns (string memory){
         bytes memory str = bytes(_str);

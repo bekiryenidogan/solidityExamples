@@ -8,13 +8,13 @@ contract TheGameCircle {
     // Number of accounts Whitelisted
     uint32 public numAddressesWhitelisted;
 
-     //Number of accounts Blacklisted
+     // Number of accounts Blacklisted
     uint32 public numAddressesBlacklisted;
 
-    //Check if the address is in the whitelist
+    // Check if the address is in the whitelist
     mapping(address => bool) public whitelistedAddresses;
 
-     //Check if the address is in the blacklist
+    // Check if the address is in the blacklist
     mapping (address =>bool) public blacklistedAddresses;
 
 
@@ -45,7 +45,7 @@ contract TheGameCircle {
     }
 
 
-    //Community Data - Searching with communities id 
+    // Community Data - Searching with communities id 
     function getCommunity(uint32 _communityId) public view returns (Community memory){
         require(_communityId<=communities.length,"Out of bounds");
         return  communities[_communityId];
@@ -98,13 +98,13 @@ contract TheGameCircle {
             communities[communityId].player.pop();
     }
 
-    // It is used to kick users from the community. It works by getting the community id and the address to be kicked out of the community.
+    // It is used to kick users from the community. The function needs community id and the address in order to work
     function kickPlayer(uint256 id, address kickedPlayer) external  onlyOwner{
         remove(id,isUser(id, kickedPlayer));
     
      }
 
-      // Add account to whitelist
+    // Add account to whitelist
     function addToWhiteList (address _addressToWhitelist) external  onlyOwner {
         require(!whitelistedAddresses[_addressToWhitelist], "Sender has already been whitelisted");
         require(!blacklistedAddresses[_addressToWhitelist],"user is on the blacklist");
@@ -132,7 +132,7 @@ contract TheGameCircle {
         numAddressesBlacklisted--;
     }
 
-        //Makes it only available for the owner
+    // Makes it only available for the owner
     modifier onlyOwner() {
         require(owner == msg.sender, "Ownable: caller is not the owner");
         _;

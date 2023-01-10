@@ -62,7 +62,6 @@ contract TheGameCircle {
         require(success, "Failed to send money");
 
 
-    // isuser kontrolü ???
         for (uint i=1;i<communities[id].player.length;i++) {
 
             if (communities[id].player[i] == msg.sender) {
@@ -91,7 +90,7 @@ contract TheGameCircle {
             
     }
 
-    /** Remove function sets the element in the index selected with the isUser function 
+    /** Remove function, sets the element in the index selected with the isUser function 
         as the last element of the array. Then deletes with the array.pop function
     **/
      function remove(uint communityId,uint playerIndex) private onlyOwner{

@@ -31,6 +31,8 @@ contract TheGameCircle {
         owner = payable (msg.sender);
     }
 
+
+
     function createCommunity (string memory _name, uint32  _maxplayer,uint  _fee,address[] memory _player)external  onlyOwner {
         
         Community memory community;        
@@ -42,12 +44,15 @@ contract TheGameCircle {
         communities.push(community);
     }
 
+
+    //Community Data - Searching with communities id 
     function getCommunity(uint32 _communityId) public view returns (Community memory){
         require(_communityId<=communities.length,"Out of bounds");
         return  communities[_communityId];
 
     }
 
+    // JoinCommunity - Need to be in whitelist and pay the community fee
     function joinCommunity(uint256 id) external payable  isBlacklisted isWhitelisted {
         require(communities[id].maxPlayer>=communities[id].player.length,"Community is Full");
         require(msg.value == communities[id].fee * 1 ether,"Incorrect amount of ether");
@@ -57,7 +62,7 @@ contract TheGameCircle {
         require(success, "Failed to send money");
 
 
-
+    // isuser kontrolü ???
         for (uint i=1;i<communities[id].player.length;i++) {
 
             if (communities[id].player[i] == msg.sender) {
@@ -69,6 +74,7 @@ contract TheGameCircle {
       
     }
 
+    // Returns the index of the user 
     function isUser(uint256 id,address kickPlayerIndex) internal view onlyOwner returns (uint find){
         bool finded;
         for (uint i=0;i< communities[id].player.length; i++) 
@@ -84,11 +90,16 @@ contract TheGameCircle {
         }
             
     }
+
+    /** Remove function sets the element in the index selected with the isUser function 
+        as the last element of the array. Then deletes with the array.pop function
+    **/
      function remove(uint communityId,uint playerIndex) private onlyOwner{
             communities[communityId].player[playerIndex] = communities[communityId].player[communities[communityId].player.length - 1];
             communities[communityId].player.pop();
     }
 
+    // It is used to kick users from the community. It works by getting the community id and the address to be kicked out of the community.
     function kickPlayer(uint256 id, address kickedPlayer) external  onlyOwner{
         remove(id,isUser(id, kickedPlayer));
     

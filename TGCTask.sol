@@ -52,7 +52,7 @@ contract TheGameCircle {
 
     }
 
-    // JoinCommunity - Need to be in whitelist and pay the community fee
+    // JoinCommunity - Needs to be in whitelist and pay the community fee
     function joinCommunity(uint256 id) external payable  isBlacklisted isWhitelisted {
         require(communities[id].maxPlayer>=communities[id].player.length,"Community is Full");
         require(msg.value == communities[id].fee * 1 ether,"Incorrect amount of ether");
